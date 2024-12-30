@@ -1,0 +1,8 @@
+__pycache__
+.DS_Store
+output/
+images_for_debugging_and_analysis/
+
+testing_notebooks/*
+!testing_notebooks/main.ipynb
+
