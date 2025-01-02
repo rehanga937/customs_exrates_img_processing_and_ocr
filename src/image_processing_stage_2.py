@@ -27,6 +27,7 @@ def get_histogram(frequencies: list, max_axis_value: int) -> BytesIO:
     plt.title('Histogram of Detected Contour Points (Larger)')
     plot_bytes_io = BytesIO()
     plt.savefig(plot_bytes_io, format='png')
+    plt.close()
     plot_bytes_io.seek(0)
     return plot_bytes_io
 

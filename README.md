@@ -15,7 +15,8 @@ I have made a separate benchmark tool to compare the country-exchangerate detect
 
 # Further improvements
 - Table corner detection needs to be more reliable.
-- The system for persisting images during the various processing stages to disk for debugging has been implemented in the most idiotic and annoying and bad code practice way possible, and some of them don't even work. 
+- The system for persisting images during the various processing stages to disk for debugging has been implemented in the most idiotic and annoying and bad code practice way possible.
+- Some hard-coded values (eg: a kernel-size) may be better expressed as a ratio of image size
 
 # Documentation
 The notebook in the testing_notebooks folder, will provide an explanation of how the thing works. I have only made few improvements over it in the main program.
