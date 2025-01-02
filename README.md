@@ -6,6 +6,10 @@
 - This new method uses contour detection, which I have used in a way to more reliably detext table corners, and scipy signal library find_peaks algorithm to find rows and columns. This gives ~84% detection rate.
 - The most common issue remains that if the 4 corners of the table are not identifid, detection for that documents falls drastically.
 
+# Pre-requisites
+- Install all in requirements.txt
+- Install Tesseract 5 on the system, and ensure it's added to the environment path. https://tesseract-ocr.github.io/tessdoc/Installation.html
+
 # Benchmark Tool
 I have made a separate benchmark tool to compare the country-exchangerate detection rate against the performance of Azure Document Intelligence (or technically anything else). Read it to see what 'detection rate' and 'detection of a country-exchangerate pair' means/
 
