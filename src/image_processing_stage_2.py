@@ -31,13 +31,14 @@ def get_histogram(frequencies: list, max_axis_value: int) -> BytesIO:
     return plot_bytes_io
 
 
-def get_table_lines(frequncies: list, image_shape, vertical: bool) -> list:
+def get_table_lines(frequncies: list, image_shape, vertical: bool, min_ratio_of_highest_prominence: float = 0.25) -> list:
     """Uses scipy signal library peak detection to identify peaks and their width (the width is used because the lines may not be perfectly vertical or horizontal)
 
     Args:
         frequncies (list): x_frequencies when searching for vertical lines, y_frequencies otherwise
         image_shape (_type_): enter the image.shape property here
         vertical (bool): Is the search for vertical lines (columns) or horizontal lines (rows)?
+        min_ratio_of_highest_prominence (float, optional): _description_. Defaults to 0.25. This will determine the lower bound of prominence for a peak to be identified as a ratio of the most prominent peak.
 
     Returns:
         list: list of lines (each line is represented by 2 points - the starting and ending point). Lines are sorted ascending.
@@ -73,7 +74,7 @@ def get_table_lines(frequncies: list, image_shape, vertical: bool) -> list:
 
     for peak in peaks_with_properties:
         prominence = peak[1]['prominence']
-        if prominence < max_prominence_item*0.25: break
+        if prominence < max_prominence_item*min_ratio_of_highest_prominence: break
         left_ips = peak[1]['left_ips']
         right_ips = peak[1]['right_ips']
         if vertical: lines.append(((round(left_ips),0),(round(right_ips),primary_limit)))
@@ -136,7 +137,11 @@ def process_stage_2(unwarped_base_image: MatLike) -> tuple[list, list, BytesIO, 
     plot_for_rows = get_histogram(y_frequencies,max_y)
 
     # now that we have the frequencies, we can use a peak detection algorithm to determine the column and row lines
-    vertical_lines = get_table_lines(x_frequencies,unwarped_base_image.shape,True)
+    vertical_lines = []
+    min_ratio_of_highest_prominence = 0.25
+    while len(vertical_lines) < 7:
+        vertical_lines = get_table_lines(x_frequencies,unwarped_base_image.shape,True,min_ratio_of_highest_prominence)
+        min_ratio_of_highest_prominence -= 0.01
     horizontal_lines = get_table_lines(y_frequencies,unwarped_base_image.shape,False)
 
     # visual representation of identified row and column lines

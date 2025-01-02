@@ -6,6 +6,7 @@ from src import image_processing_stage_1
 import re
 import io
 import config
+import os
 
 
 def cell_images_to_csvstring(cell_images: list[MatLike]) -> str:
@@ -104,11 +105,11 @@ def persist_debugging_images_part0(name: str, base_image: MatLike):
 def persist_debugging_images_part1(name: str, unwarped_base_image: MatLike,image_with_all_contours: MatLike,
                                    image_with_larger_contours: MatLike,larger_contours_mask_image: MatLike,
                                    retr_external_img: MatLike,table_corners: tuple):
-    cv2.imwrite(f'images_for_debugging_and_analysis/2_unwarped_base_image/{name}.png',unwarped_base_image)
-    cv2.imwrite(f'images_for_debugging_and_analysis/3_image_with_all_contours/{name}.png',image_with_all_contours)
-    cv2.imwrite(f'images_for_debugging_and_analysis/4_image_with_larger_contours/{name}.png',image_with_larger_contours)
-    cv2.imwrite(f'images_for_debugging_and_analysis/5_larger_contours_mask_image/{name}.png',larger_contours_mask_image)
-    cv2.imwrite(f'images_for_debugging_and_analysis/6_retr_external_img/{name}.png',retr_external_img)
+    cv2.imwrite(f'images_for_debugging_and_analysis/7_unwarped_base_image/{name}.png',unwarped_base_image)
+    cv2.imwrite(f'images_for_debugging_and_analysis/2_image_with_all_contours/{name}.png',image_with_all_contours)
+    cv2.imwrite(f'images_for_debugging_and_analysis/3_image_with_larger_contours/{name}.png',image_with_larger_contours)
+    cv2.imwrite(f'images_for_debugging_and_analysis/4_larger_contours_mask_image/{name}.png',larger_contours_mask_image)
+    cv2.imwrite(f'images_for_debugging_and_analysis/5_retr_external_img/{name}.png',retr_external_img)
 
     top_left,top_right,bottom_right,bottom_left = table_corners
 
@@ -117,7 +118,7 @@ def persist_debugging_images_part1(name: str, unwarped_base_image: MatLike,image
     cv2.circle(table_corner_image,top_right,5,(0,0,255),-1)
     cv2.circle(table_corner_image,bottom_right,5,(0,0,255),-1)
     cv2.circle(table_corner_image,bottom_left,5,(0,0,255),-1)
-    cv2.imwrite(f'images_for_debugging_and_analysis/7_table_corner_image/{name}.png',table_corner_image)
+    cv2.imwrite(f'images_for_debugging_and_analysis/6_table_corner_image/{name}.png',table_corner_image)
 
 
 def persist_debugging_images_part2(name: str, unwarped_base_image: MatLike,vertical_lines: list,horizontal_lines: list,
@@ -139,5 +140,6 @@ def persist_debugging_images_part2(name: str, unwarped_base_image: MatLike,verti
 
 def persist_debugging_images_part3(name: str, cell_images: list[MatLike], gridless_image: MatLike):
     cv2.imwrite(f'images_for_debugging_and_analysis/13_gridless_image/{name}.png',gridless_image)
+    os.makedirs(f'images_for_debugging_and_analysis/14_cells/{name}', exist_ok=True)
     for i,cell_image in enumerate(cell_images):
-        cv2.imwrite(f'images_for_debugging_and_analysis/13_gridless_image/{name}/{i}.png',cell_image)
+        cv2.imwrite(f'images_for_debugging_and_analysis/14_cells/{name}/{i}.png',cell_image)

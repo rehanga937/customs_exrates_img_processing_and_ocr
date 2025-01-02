@@ -60,7 +60,7 @@ def main():
 
     # collect all links
     check_older_pages_when_webscraping = config.check_older_pages_when_webscraping
-    links = webscrape.collect_links(check_older_pages_when_webscraping); links= links[5:15]
+    links = webscrape.collect_links(check_older_pages_when_webscraping); links = links[0:]
 
     # for each link
     for name,pdf_link in links:
