@@ -1,7 +1,7 @@
 # Intro
 - This project was initiated for the data scraping process for the weekly updated exchange rates on the customs website.
 - The problem was the PDFs containing the table with the exchange rates for various countries was an image. 
-- While the solution deployed at Browns uses Azure Document Intelligence (excellent performance and we fit the requirements for the free tier), this is an attempt by me to use image processing to extract the cells and pass it to an offline OCR model (Tesseract).
+- While we can use Azure Document Intelligence (even the free tier) (excellent performance and we fit the requirements for the free tier), this is an attempt by me to use image processing to extract the cells and pass it to an offline OCR model (Tesseract).
 - A while ago I tried different techniques, before ultimately settling on an inefficient system using my own algorithm to detect the table corners, k++ means clustering for row and column detection, all in combination with open-cv's contour detection. This yielded ~55% detection rate on the benchmark tool and was very slow.
 - This new method uses contour detection, which I have used in a way to more reliably detext table corners, and scipy signal library find_peaks algorithm to find rows and columns. This gives ~84% detection rate.
 - The most common issue remains that if the 4 corners of the table are not identifid, detection for that documents falls drastically.
